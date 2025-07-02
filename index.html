@@ -1,173 +1,65 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Jet Recognition Quiz</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      padding: 20px;
-      max-width: 700px;
-      margin: auto;
-    }
-    h1 {
-      text-align: center;
-    }
-    .question-container {
-      margin-bottom: 15px;
-    }
-    .choices label {
-      display: block;
-      margin-bottom: 8px;
-      cursor: pointer;
-    }
-    img {
-      max-width: 100%;
-      height: auto;
-      display: block;
-      margin: 15px auto;
-    }
-    button {
-      padding: 10px 20px;
-      font-size: 16px;
-      margin-top: 10px;
-    }
-    .result {
-      font-weight: bold;
-      margin-top: 15px;
-    }
-  </style>
-</head>
-<body>
-
-  <h1>Jet Recognition Quiz</h1>
-  <div id="quiz-container">
-    <div class="question-container" id="question"></div>
-    <div class="choices" id="choices"></div>
-    <img id="question-image" src="" alt="Question Image"/>
-    <button onclick="nextQuestion()">Next</button>
-    <div class="result" id="result"></div>
-  </div>
-
-  <script>
-    const quizData = [
-      {
-        question: "Which plane is this?",
-        choices: ["Bombardier 3500", "Learjet 35", "G700", "Embraer Phenom 300"],
-        answer: 0,
-        image: "image1.png"
-      },
-      {
-        question: "You spot a jet with 3 engines and a mid-level tail. Its nose isn’t pointy, and it looks a bit dated. What is it?",
-        choices: ["Dassault", "Hawker", "Cessna", "Learjet"],
-        answer: 0
-      },
-      {
-        question: "Which plane is this?",
-        choices: ["Gulfstream G280", "Learjet 60", "Cessna Citation XLS+", "Bombardier Challenger 350"],
-        answer: 1,
-        image: "image2.png"
-      },
-      {
-        question: "Which business jet is shown in this silhouette?",
-        choices: ["Bombardier Challenger 300", "Gulfstream G200", "Embraer Legacy 500", "Dassault Falcon 2000"],
-        answer: 3,
-        image: "image3.png"
-      },
-      {
-        question: "You see a plane with square windows, a T-tail, and a pointy nose. What’s the likely manufacturer?",
-        choices: ["Learjet", "Embraer", "Bombardier", "Hawker"],
-        answer: 1,
-      },
-      {
-        question: "Who manufactured the above plane?",
-        choices: ["Hawker", "Cessna", "Embraer", "Learjet"],
-        answer: 1,
-        image: image4.png
-      },
-      {
-        question: "Which manufacturer is known for business jets with three engines and a mid-level tail?",
-        choices: ["Gulfstream", "Dassault", "Bombardier", "Cessna"],
-        answer: 1
-      },
-      {
-        question: "You see a jet with oval windows and a triangular nose. Which manufacturer is it most likely from?",
-        choices: ["Gulfstream", "Embraer", "Learjet", "Hawker"],
-        answer: 0
-      },
-      {
-        question: "Which design feature is a dead giveaway for a Bombardier jet?",
-        choices: [
-          "Large finlets",
-          "Vertically oriented inlet at tail root and triangular nose",
-          "Big, flat nose",
-          "Three engines"
-        ],
-        answer: 1
-      },
-      {
-        question: "Which jet would you expect to have large finlets?",
-        choices: ["Learjet", "Embraer", "Dassault", "Cessna"],
-        answer: 0
-      }
-    ];
-
-    let currentQuestion = 0;
-    let score = 0;
-
-    function loadQuestion() {
-      const q = quizData[currentQuestion];
-      document.getElementById("question").innerText = q.question;
-
-      const choicesDiv = document.getElementById("choices");
-      choicesDiv.innerHTML = "";
-      q.choices.forEach((choice, index) => {
-        const label = document.createElement("label");
-        label.innerHTML = `<input type="radio" name="choice" value="${index}"> ${choice}`;
-        choicesDiv.appendChild(label);
-      });
-
-      document.getElementById("question-image").src = q.image;
-      document.getElementById("result").innerText = "";
-    }
-
-    function nextQuestion() {
-      const selected = document.querySelector('input[name="choice"]:checked');
-      if (!selected) {
-        alert("Please select an answer before proceeding.");
-        return;
-      }
-
-      const answer = parseInt(selected.value);
-      if (answer === quizData[currentQuestion].answer) {
-        score++;
-        document.getElementById("result").innerText = "✅ Correct!";
-      } else {
-        const correct = quizData[currentQuestion].choices[quizData[currentQuestion].answer];
-        document.getElementById("result").innerText = `❌ Wrong! The correct answer was: ${correct}`;
-      }
-
-      // Delay before showing next question
-      setTimeout(() => {
-        currentQuestion++;
-        if (currentQuestion < quizData.length) {
-          loadQuestion();
-        } else {
-          showFinalScore();
-        }
-      }, 1000);
-    }
-
-    function showFinalScore() {
-      document.getElementById("quiz-container").innerHTML = `
-        <h2>Quiz Completed</h2>
-        <p>Your score: ${score} out of ${quizData.length}</p>
-      `;
-    }
-
-    loadQuestion();
-  </script>
-
-</body>
-</html>
+const quizData = [
+  {
+    question: "Which plane is this?",
+    choices: ["Bombardier 3500", "Learjet 35", "G700", "Embraer Phenom 300"],
+    answer: 0,
+    image: "image1.png"
+  },
+  {
+    question: "You spot a jet with 3 engines and a mid-level tail. Its nose isn’t pointy, and it looks a bit dated. What is it?",
+    choices: ["Dassault", "Hawker", "Cessna", "Learjet"],
+    answer: 0
+  },
+  {
+    question: "Which plane is this?",
+    choices: ["Gulfstream G280", "Learjet 60", "Cessna Citation XLS+", "Bombardier Challenger 350"],
+    answer: 1,
+    image: "image2.png"
+  },
+  {
+    question: "Which business jet is shown in this silhouette?",
+    choices: ["Bombardier Challenger 300", "Gulfstream G200", "Embraer Legacy 500", "Dassault Falcon 2000"],
+    answer: 3,
+    image: "image3.png"
+  },
+  {
+    question: "You see a plane with square windows, a T-tail, and a pointy nose. What’s the likely manufacturer?",
+    choices: ["Learjet", "Embraer", "Bombardier", "Hawker"],
+    answer: 1
+    // No image
+  },
+  {
+    question: "Who manufactured the above plane?",
+    choices: ["Hawker", "Cessna", "Embraer", "Learjet"],
+    answer: 1,
+    image: "image4.png"
+  },
+  {
+    question: "Which manufacturer is known for business jets with three engines and a mid-level tail?",
+    choices: ["Gulfstream", "Dassault", "Bombardier", "Cessna"],
+    answer: 1
+    // No image
+  },
+  {
+    question: "You see a jet with oval windows and a triangular nose. Which manufacturer is it most likely from?",
+    choices: ["Gulfstream", "Embraer", "Learjet", "Hawker"],
+    answer: 0
+    // No image
+  },
+  {
+    question: "Which design feature is a dead giveaway for a Bombardier jet?",
+    choices: [
+      "Large finlets",
+      "Vertically oriented inlet at tail root and triangular nose",
+      "Big, flat nose",
+      "Three engines"
+    ],
+    answer: 1
+  },
+  {
+    question: "Which jet would you expect to have large finlets?",
+    choices: ["Learjet", "Embraer", "Dassault", "Cessna"],
+    answer: 0
+    // No image
+  }
+];
