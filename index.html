@@ -47,8 +47,8 @@
     <div class="question-container" id="question"></div>
     <div class="choices" id="choices"></div>
     <img id="question-image" src="" alt="Question Image" style="display: none;"/>
-    <button id="check-button" onclick="checkAnswer()">Check Answer</button>
-    <button id="next-button" onclick="nextQuestion()" disabled>Next Question</button>
+    <button onclick="checkAnswer()">Check Answer</button>
+    <button onclick="nextQuestion()">Next Question</button>
     <div class="result" id="result"></div>
   </div>
 
@@ -89,11 +89,6 @@
         image: "image4.png"
       },
       {
-        question: "Which manufacturer is known for business jets with three engines and a mid-level tail?",
-        choices: ["Gulfstream", "Dassault", "Bombardier", "Cessna"],
-        answer: 1
-      },
-      {
         question: "You see a jet with oval windows and a triangular nose. Which manufacturer is it most likely from?",
         choices: ["Gulfstream", "Embraer", "Learjet", "Hawker"],
         answer: 0
@@ -112,12 +107,18 @@
         question: "Which jet would you expect to have large finlets?",
         choices: ["Learjet", "Embraer", "Dassault", "Cessna"],
         answer: 0
+      },
+      {
+        question: "Which manufacturer produces this long-range, ultra-wide business jet?",
+        choices: ["Dassault", "Gulfstream", "Bombardier", "Cessna"],
+        answer: 0,
+        image: "Dassault_10x.webp"
       }
     ];
 
     let currentQuestion = 0;
     let score = 0;
-    let answered = false;
+    let answeredCorrectly = false;
 
     function loadQuestion() {
       const q = quizData[currentQuestion];
@@ -140,14 +141,10 @@
       }
 
       document.getElementById("result").innerText = "";
-      document.getElementById("check-button").disabled = false;
-      document.getElementById("next-button").disabled = true;
-      answered = false;
+      answeredCorrectly = false;
     }
 
     function checkAnswer() {
-      if (answered) return; // Prevent double checking
-
       const selected = document.querySelector('input[name="choice"]:checked');
       if (!selected) {
         alert("Please select an answer before checking.");
@@ -156,16 +153,15 @@
 
       const answer = parseInt(selected.value);
       if (answer === quizData[currentQuestion].answer) {
-        score++;
         document.getElementById("result").innerText = "✅ Correct!";
+        if (!answeredCorrectly) {
+          score++;
+          answeredCorrectly = true;
+        }
       } else {
         const correct = quizData[currentQuestion].choices[quizData[currentQuestion].answer];
-        document.getElementById("result").innerText = `❌ Wrong! The correct answer was: ${correct}`;
+        document.getElementById("result").innerText = `❌ Incorrect. Try again or click Next. The correct answer is: ${correct}`;
       }
-
-      document.getElementById("check-button").disabled = true;
-      document.getElementById("next-button").disabled = false;
-      answered = true;
     }
 
     function nextQuestion() {
